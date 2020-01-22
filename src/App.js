@@ -1,15 +1,21 @@
 import React from "react";
+import { Router, navigate } from "@reach/router";
+
 import { Login } from "./components/Login/Login";
+import { Confetti } from "./components/Confetti/Confetti";
 
 function App() {
   function onLogin(loginData) {
-    console.log(loginData);
+    navigate("/confetti", {
+      state: loginData
+    });
   }
 
   return (
-    <div className="App">
-      <Login onLogin={onLogin} />
-    </div>
+    <Router>
+      <Login path="/" onLogin={onLogin} />
+      <Confetti path="/confetti" />
+    </Router>
   );
 }
 
