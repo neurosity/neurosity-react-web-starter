@@ -1,12 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { navigate } from "@reach/router";
 import { Notion } from "@neurosity/notion";
+import { TheConfetti } from "../Confetti/TheConfetti";
 
 export function Confetti({ location }) {
   const [notion, setNotion] = useState(null);
   const [user, setUser] = useState(null);
   const [error, setError] = useState("");
+  const [calmScore, setCalmScore] = useState();
+  const [showConfetti, setShowConfetti] = useState(false);
   const { deviceId, email, password } = location.state || {};
+
+  useEffect(() => {
+    if (user && notion) {
+      notion.calm().subscribe(calm => {
+        const score = Number(calm.probability.toFixed(2));
+        setCalmScore(score);
+        if (score > 0.5) {
+          setShowConfetti(true);
+        } else {
+          setShowConfetti(false);
+        }
+      });
+    }
+  }, [user, notion]);
 
   useEffect(() => {
     if (deviceId) {
@@ -63,6 +80,8 @@ export function Confetti({ location }) {
         </div>
       ) : null}
       <p>Your device id is {deviceId}</p>
+      <h2>Calm score: {calmScore}</h2>
+      {showConfetti ? <TheConfetti /> : null}
     </main>
   );
 }
