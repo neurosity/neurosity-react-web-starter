@@ -30,7 +30,7 @@ export function Calm({ user, notion }) {
 
   return (
     <main>
-      <Nav user={user} />
+      <Nav user={user} notion={notion} />
       <h1>Confetti!</h1>
       <h2>Calm score: {calmScore}</h2>
       {showConfetti ? <Confetti width={width} height={height} /> : null}
