@@ -74,7 +74,7 @@ body {
   justify-content: space-between;
   width: 210px;
   min-height: 150px;
-  padding: 25px 20px;
+  padding: 30px 20px;
   border-radius: 5px;
   margin: 20px;
   position: absolute;
@@ -123,8 +123,8 @@ body {
 }
 
 .status-item {
-  margin-bottom: 10px;
-  padding-top: 10px;
+  margin-bottom: 8px;
+  padding-top: 8px;
   border-top: 2px solid rgb(0, 26, 43);
 }
 

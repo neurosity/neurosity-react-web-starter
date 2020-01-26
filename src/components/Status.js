@@ -55,11 +55,18 @@ export function Status({ notion, info }) {
         </span>
       </div>
       <div className="status-item status-battery">
-        {charging ? <>&#x26A1; Charging</> : <>Charged</>} {battery}%
+        {charging ? (
+          <>
+            <ChargingIcon /> Charging
+          </>
+        ) : (
+          <>Charged</>
+        )}{" "}
+        {battery}%
       </div>
       {sleepMode && state !== "offline" ? (
         <div className="status-item status-sleep-mode">
-          &#127769; &nbsp; Sleep mode
+          <SleepModeIcon /> &nbsp; Sleep mode
         </div>
       ) : null}
     </aside>
@@ -72,4 +79,20 @@ function getStatusColor(state) {
   }
 
   return stateColors.offline;
+}
+
+function ChargingIcon() {
+  return (
+    <span role="img" aria-label="Electricity">
+      &#x26A1;
+    </span>
+  );
+}
+
+function SleepModeIcon() {
+  return (
+    <span role="img" aria-label="The Moon">
+      &#127769;
+    </span>
+  );
 }
