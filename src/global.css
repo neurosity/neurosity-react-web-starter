@@ -165,3 +165,29 @@ body {
     transform: rotate(360deg);
   }
 }
+
+/**
+ * Meter
+ */
+meter {
+  position: fixed;
+  width: 100vw;
+  height: 4px;
+  top: 0;
+  left: 0;
+}
+
+meter::-webkit-meter-optimum-value,
+meter::-webkit-meter-suboptimum-value,
+meter::-webkit-meter-even-less-good-value {
+  transition: 0.5s width;
+}
+
+/* WebKit */
+meter::-webkit-meter-bar {
+  background: transparent;
+}
+
+meter::-webkit-meter-optimum-value {
+  background: rgba(113, 211, 211, 0.4);
+}
