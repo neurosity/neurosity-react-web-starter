@@ -30,8 +30,7 @@ export function Nav({ notion }) {
         className="nav-link"
         href="https://github.com/neurosity/demo-notion-confetti"
         target="_blank"
-        noopener
-        noreferrer
+        rel="noopener noreferrer"
       >
         View source code
       </a>
