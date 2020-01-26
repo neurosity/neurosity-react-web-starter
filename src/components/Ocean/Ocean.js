@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import useWindowSize from "react-use/lib/useWindowSize";
 import useRafState from "react-use/lib/useRafState";
+import useSpring from "react-use/lib/useSpring";
 
 import { Simulator, Camera } from "./simulation.js";
 import { mapCalmToWeather } from "./weather.js";
@@ -13,6 +14,7 @@ export function Ocean({ calm }) {
   const { width, height } = useWindowSize();
   const [simulator, setSimulator] = useState();
   const [lastTime, setLastTime] = useRafState(Date.now());
+  const animatedCalm = useSpring(calm, 0, 25);
 
   useEffect(() => {
     const simulator = new Simulator(ref.current, 0, 0);
@@ -20,17 +22,17 @@ export function Ocean({ calm }) {
   }, [ref, setSimulator]);
 
   useEffect(() => {
-    if (simulator && calm) {
-      setWeatherBasedOnCalm(calm);
+    if (simulator && animatedCalm) {
+      setWeatherBasedOnCalm(animatedCalm, 0, 0);
     }
 
-    function setWeatherBasedOnCalm(calm) {
-      const { choppiness, wind, size } = mapCalmToWeather(calm);
+    function setWeatherBasedOnCalm(animatedCalm) {
+      const { choppiness, wind, size } = mapCalmToWeather(animatedCalm);
       simulator.setChoppiness(choppiness);
       simulator.setWind(wind, wind);
       simulator.setSize(size);
     }
-  }, [calm, simulator]);
+  }, [animatedCalm, simulator]);
 
   useEffect(() => {
     if (simulator) {
