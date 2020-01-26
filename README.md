@@ -1,4 +1,4 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/6a954b61-543b-43cd-9304-cec92a5c5b39/deploy-status)](https://ocean.nerosity.co)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/6a954b61-543b-43cd-9304-cec92a5c5b39/deploy-status)](https://ocean.neurosity.co)
 
 # Notion Ocean
 
