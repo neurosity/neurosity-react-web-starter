@@ -55,7 +55,7 @@ export function Status({ notion, info }) {
         </span>
       </div>
       <div className="status-item status-battery">
-        {!charging ? <>&#x26A1; Charging</> : <>Charged</>} {battery}%
+        {charging ? <>&#x26A1; Charging</> : <>Charged</>} {battery}%
       </div>
       {sleepMode && state !== "offline" ? (
         <div className="status-item status-sleep-mode">
