@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import useWindowSize from "react-use/lib/useWindowSize";
-import Confetti from "react-confetti";
 import { Nav } from "../components/Nav";
+import { Ocean } from "../components/Ocean/Ocean";
+
+const testSlider = true;
 
 export function Calm({ user, notion }) {
-  const [calmScore, setCalmScore] = useState();
-  const [showConfetti, setShowConfetti] = useState(false);
-  const { width, height } = useWindowSize();
+  const [calm, setCalm] = useState(0);
+  console.log("calm", calm);
 
   useEffect(() => {
     if (!user || !notion) {
@@ -14,13 +14,7 @@ export function Calm({ user, notion }) {
     }
 
     const subscription = notion.calm().subscribe(calm => {
-      const score = Number(calm.probability.toFixed(2));
-      setCalmScore(score);
-      if (score > 0.5) {
-        setShowConfetti(true);
-      } else {
-        setShowConfetti(false);
-      }
+      setCalm(Number(calm.probability.toFixed(2)));
     });
 
     return () => {
@@ -30,8 +24,26 @@ export function Calm({ user, notion }) {
 
   return (
     <main>
+      {testSlider ? <TestSlider calm={calm} setCalm={setCalm} /> : null}
       {user ? <Nav notion={notion} /> : null}
-      {showConfetti ? <Confetti width={width} height={height} /> : null}
+      <Ocean calm={calm} setCalm={setCalm} />
     </main>
+  );
+}
+
+function TestSlider({ calm, setCalm }) {
+  const style = { position: "absolute", zIndex: 3, padding: "20px" };
+  return (
+    <div style={style}>
+      <input
+        type="range"
+        min={0}
+        max={1}
+        value={calm}
+        step={0.01}
+        onChange={e => setCalm(Number(e.target.value))}
+      />
+      <small>&nbsp;{calm}% Calm</small>
+    </div>
   );
 }
