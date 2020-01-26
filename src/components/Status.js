@@ -42,31 +42,23 @@ export function Status({ notion, info }) {
     <aside>
       {info ? (
         <h3 className="status-device-nickname">
-          <span
-            className="status-indicator"
-            style={{ background: getStatusColor(state) }}
-          ></span>
           {info.deviceNickname}
         </h3>
       ) : null}
       <div className="status-item status-state">
-        <span className="status-state">
-          {state in statesLabels ? statesLabels[state] : state}
-        </span>
+        <span
+          className="status-indicator"
+          style={{ background: getStatusColor(state) }}
+        ></span>
+        {state in statesLabels ? statesLabels[state] : state}
       </div>
       <div className="status-item status-battery">
-        {charging ? (
-          <>
-            <ChargingIcon /> Charging
-          </>
-        ) : (
-          <>Charged</>
-        )}{" "}
-        {battery}%
+        <ChargingIcon /> &nbsp;{charging ? "Charging" : "Charged"}
+        &nbsp;{battery}%
       </div>
       {sleepMode && state !== "offline" ? (
         <div className="status-item status-sleep-mode">
-          <SleepModeIcon /> &nbsp; Sleep mode
+          <SleepModeIcon /> &nbsp;Sleep mode
         </div>
       ) : null}
     </aside>

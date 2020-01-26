@@ -97,10 +97,24 @@ body {
 .nav-link {
   font-size: 17px;
   color: darkslategray;
+  text-decoration: none;
+}
+
+.nav-link-block {
   display: block;
   margin-top: 20px;
   align-self: center;
-  text-decoration: none;
+}
+
+.nav-footer {
+  font-size: 10px;
+  color: darkslategray;
+  padding: 10px 10px 0 10px;
+  text-align: center;
+}
+
+.nav-footer .nav-link {
+  font-size: inherit;
 }
 
 /**
@@ -108,12 +122,11 @@ body {
  */
 
 .status-indicator {
-  background: lightgray;
   width: 8px;
   height: 8px;
   border-radius: 50%;
   font-size: 0;
-  margin: 0 10px 4px 0;
+  margin: 0 17px 2px 6px;
   display: inline-block;
 }
 

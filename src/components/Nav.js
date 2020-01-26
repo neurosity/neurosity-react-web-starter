@@ -27,13 +27,24 @@ export function Nav({ notion }) {
         Logout
       </button>
       <a
-        className="nav-link"
-        href="https://github.com/neurosity/demo-notion-confetti"
+        className="nav-link nav-link-block"
+        href="https://github.com/neurosity/notion-ocean"
         target="_blank"
         rel="noopener noreferrer"
       >
         View source code
       </a>
+      <footer className="nav-footer">
+        Ocean Wave Simulation by{" "}
+        <a
+          className="nav-link"
+          href="https://david.li/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          David Li
+        </a>
+      </footer>
     </nav>
   );
 }
