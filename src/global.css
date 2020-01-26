@@ -1,5 +1,7 @@
 body {
   margin: 0;
+  background-color: #e6ecef;
+  font-size: 20px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
     "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
     "Helvetica Neue", sans-serif;
@@ -7,15 +9,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
+/**
+ * LoginForm
+ */
 
 .login-form {
-  max-width: 480px;
+  max-width: 360px;
   margin: 40px auto;
-  background: rgba(0, 0, 0, 0.05);
+  background: #ffffff;
   padding: 20px;
   border-radius: 5px;
   display: flex;
@@ -23,7 +24,7 @@ code {
 }
 
 .login-form .row {
-  margin: 10px 0px;
+  margin: 8px 0px;
   display: flex;
   flex-direction: column;
 }
@@ -31,24 +32,98 @@ code {
 .login-form label {
   font-weight: 500;
   font-size: 18px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .login-form input {
   width: 100%;
-  padding: 10px;
+  padding: 14px 10px;
+  font-size: 14px;
   border: 0;
   border-radius: 5px;
   box-sizing: border-box;
-  box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0px 0px 0 2px rgba(0, 0, 0, 0.1);
 }
 
 .login-form button {
-  order: none;
+  border: none;
   padding: 11px;
   font-weight: 500;
   font-size: 20px;
   color: white;
-  background: lightblue;
+  font-weight: 500;
+  background: #000c14;
   border-radius: 5px;
+}
+
+/**
+ * Nav
+ */
+
+.nav {
+  background: #000c14;
+  color: rgb(147, 147, 147);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 210px;
+  min-height: 150px;
+  padding: 25px 20px;
+  border-radius: 5px;
+  margin: 20px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.nav-btn {
+  background: rgb(113, 211, 211);
+  color: #000c14;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: inherit;
+  margin-top: 16px;
+}
+
+.nav-link {
+  font-size: 17px;
+  color: darkslategray;
+  display: block;
+  margin-top: 20px;
+  align-self: center;
+  text-decoration: none;
+}
+
+/**
+ * Status
+ */
+
+.status-indicator {
+  background: lightgray;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  font-size: 0;
+  margin: 0 10px 4px 0;
+  display: inline-block;
+}
+
+.status-device-nickname {
+  margin: 0 0 20px 0;
+  color: white;
+}
+
+.status-item {
+  margin-bottom: 10px;
+  padding-top: 10px;
+  border-top: 2px solid rgb(0, 26, 43);
+}
+
+.status-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
 }

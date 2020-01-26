@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { navigate } from "@reach/router";
 
-export function Nav({ user, notion }) {
-  const [status, setStatus] = useState(null);
+import { Status } from "./Status";
+
+export function Nav({ notion }) {
   const [info, setInfo] = useState(null);
-  const { state, charging, battery } = status || {};
 
   function goToLogout() {
     navigate("/logout");
@@ -18,34 +18,23 @@ export function Nav({ user, notion }) {
     notion.getInfo().then(info => {
       setInfo(info);
     });
-
-    const subscription = notion.status().subscribe(status => {
-      setStatus(status);
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
   }, [notion]);
 
   return (
-    <nav>
-      {user ? (
-        <div>
-          <h4>{info ? info.deviceNickname : null}</h4>
-          {status ? (
-            <div>
-              <span>{state ? state : "connecting..."}</span>
-              <span>
-                Battery {battery}% {charging ? "(charging)" : null}
-              </span>
-            </div>
-          ) : (
-            <div>Connecting...</div>
-          )}
-          <button onClick={goToLogout}>Logout</button>
-        </div>
-      ) : null}
+    <nav className="nav">
+      <Status notion={notion} info={info} />
+      <button onClick={goToLogout} className="nav-btn">
+        Logout
+      </button>
+      <a
+        className="nav-link"
+        href="https://github.com/neurosity/demo-notion-confetti"
+        target="_blank"
+        noopener
+        noreferrer
+      >
+        View source code
+      </a>
     </nav>
   );
 }
