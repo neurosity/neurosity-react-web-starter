@@ -3,6 +3,7 @@ import { Router, navigate } from "@reach/router";
 import { Notion } from "@neurosity/notion";
 import useLocalStorage from "react-use/lib/useLocalStorage";
 
+import { Loading } from "./components/Loading";
 import { Login } from "./pages/Login";
 import { Logout } from "./pages/Logout";
 import { Calm } from "./pages/Calm";
@@ -54,7 +55,7 @@ export function App() {
   }
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (
