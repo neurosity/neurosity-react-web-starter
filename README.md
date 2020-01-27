@@ -1,4 +1,4 @@
-# Notion Ocean
+# Notion Ocean :ocean:
 
 ![Screenshot of Notion Ocean](public/notion-ocean.png)
 
