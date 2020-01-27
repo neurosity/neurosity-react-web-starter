@@ -23,7 +23,7 @@ export function Calm({ user, notion }) {
     <main>
       {user ? <Nav notion={notion} /> : null}
       <meter value={calm} min={0} max={1} />
-      <Ocean calm={calm} setCalm={setCalm} />
+      <Ocean calm={calm} />
     </main>
   );
 }

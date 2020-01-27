@@ -41,9 +41,7 @@ export function Status({ notion, info }) {
   return (
     <aside>
       {info ? (
-        <h3 className="status-device-nickname">
-          {info.deviceNickname}
-        </h3>
+        <h3 className="card-heading">{info.deviceNickname}</h3>
       ) : null}
       <div className="status-item status-state">
         <span

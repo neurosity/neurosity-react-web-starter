@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Footer } from "./Footer";
 
 export function LoginForm({ onLogin, loading, error }) {
   const [deviceId, setDeviceId] = useState("");
@@ -11,11 +12,11 @@ export function LoginForm({ onLogin, loading, error }) {
   }
 
   return (
-    <form className="login-form" onSubmit={onSubmit}>
-      <h2>Login</h2>
+    <form className="card login-form" onSubmit={onSubmit}>
+      <h3 className="card-heading">Login</h3>
       {!!error ? <h4>{error}</h4> : null}
       <div className="row">
-        <label htmlFor="deviceId">Enter your device id:</label>
+        <label htmlFor="deviceId">Notion Device ID</label>
         <input
           type="text"
           min="32"
@@ -28,7 +29,7 @@ export function LoginForm({ onLogin, loading, error }) {
         />
       </div>
       <div className="row">
-        <label htmlFor="email">Email:</label>
+        <label htmlFor="email">Email</label>
         <input
           type="email"
           id="email"
@@ -39,7 +40,7 @@ export function LoginForm({ onLogin, loading, error }) {
         />
       </div>
       <div className="row">
-        <label htmlFor="password">Password:</label>
+        <label htmlFor="password">Password</label>
         <input
           type="password"
           id="password"
@@ -50,10 +51,11 @@ export function LoginForm({ onLogin, loading, error }) {
         />
       </div>
       <div className="row">
-        <button type="submit" disabled={loading}>
+        <button type="submit" className="card-btn" disabled={loading}>
           {loading ? "Logging in..." : "Login"}
         </button>
       </div>
+      <Footer />
     </form>
   );
 }

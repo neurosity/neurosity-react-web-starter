@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { LoginForm } from "../components/LoginForm";
+import { Ocean } from "../components/Ocean/Ocean";
 
 export function Login({ notion, user, setUser, setDeviceId }) {
   const [email, setEmail] = useState("");
@@ -46,6 +47,13 @@ export function Login({ notion, user, setUser, setDeviceId }) {
   }
 
   return (
-    <LoginForm onLogin={onLogin} error={error} loading={isLoggingIn} />
+    <>
+      <LoginForm
+        onLogin={onLogin}
+        error={error}
+        loading={isLoggingIn}
+      />
+      <Ocean calm={0.01} />
+    </>
   );
 }

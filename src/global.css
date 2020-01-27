@@ -20,17 +20,12 @@ body {
  */
 
 .login-form {
-  max-width: 360px;
-  margin: 40px auto;
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 5px;
   display: flex;
   flex-direction: column;
 }
 
 .login-form .row {
-  margin: 8px 0px;
+  margin-top: 16px;
   display: flex;
   flex-direction: column;
 }
@@ -43,39 +38,29 @@ body {
 
 .login-form input {
   width: 100%;
-  padding: 14px 10px;
+  padding: 12px 10px;
   font-size: 14px;
   border: 0;
   border-radius: 5px;
   box-sizing: border-box;
-  box-shadow: inset 0px 0px 0 2px rgba(0, 0, 0, 0.1);
-}
-
-.login-form button {
-  border: none;
-  padding: 11px;
-  font-weight: 500;
-  font-size: 20px;
-  color: white;
-  font-weight: 500;
-  background: #000c14;
-  border-radius: 5px;
+  background-color: #e6ecef;
+  font-family: monospace;
 }
 
 /**
- * components/Nav.js
+ * card
  */
 
-.nav {
+.card {
   background: #000c14;
   color: rgb(147, 147, 147);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 210px;
+  width: 300px;
   min-height: 150px;
   padding: 30px 20px;
-  border-radius: 5px;
+  border-radius: 8px;
   margin: 20px;
   position: absolute;
   right: 0;
@@ -83,7 +68,12 @@ body {
   z-index: 1;
 }
 
-.nav-btn {
+.card-heading {
+  margin: 0 0 20px 0;
+  color: white;
+}
+
+.card-btn {
   background: rgb(113, 211, 211);
   color: #000c14;
   border: none;
@@ -92,28 +82,32 @@ body {
   font-weight: 500;
   font-size: inherit;
   margin-top: 16px;
+  cursor: pointer;
 }
 
-.nav-link {
+.card-link {
   font-size: 17px;
   color: darkslategray;
   text-decoration: none;
 }
 
-.nav-link-block {
-  display: block;
-  margin-top: 20px;
-  align-self: center;
-}
-
-.nav-footer {
-  font-size: 10px;
+.card-footer {
   color: darkslategray;
-  padding: 10px 10px 0 10px;
+  margin-top: 20px;
   text-align: center;
 }
 
-.nav-footer .nav-link {
+.card-footer-cta {
+  display: block;
+  align-self: center;
+}
+
+.card-footer-credits {
+  font-size: 10px;
+  margin-top: 10px;
+}
+
+.card-footer-credits .card-link {
   font-size: inherit;
 }
 
@@ -128,11 +122,6 @@ body {
   font-size: 0;
   margin: 0 17px 2px 6px;
   display: inline-block;
-}
-
-.status-device-nickname {
-  margin: 0 0 20px 0;
-  color: white;
 }
 
 .status-item {
