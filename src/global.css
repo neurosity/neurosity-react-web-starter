@@ -111,6 +111,11 @@ body {
   font-size: inherit;
 }
 
+.card-error {
+  color: cadetblue;
+  margin: 0 0 12px 0;
+}
+
 /**
  * components/Status.js
  */

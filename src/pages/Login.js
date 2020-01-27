@@ -30,6 +30,11 @@ export function Login({ notion, user, setUser, setDeviceId }) {
   }, [email, password, notion, user, setUser, setError]);
 
   function onLogin({ email, password, deviceId }) {
+    if (deviceId && deviceId.length !== 32) {
+      setError("Please enter a valid device id");
+      return;
+    }
+
     if (email && password && deviceId) {
       setError("");
       setEmail(email);
