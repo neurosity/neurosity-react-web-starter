@@ -58,7 +58,7 @@ export function Login({ notion, user, setUser, setDeviceId }) {
         error={error}
         loading={isLoggingIn}
       />
-      <Ocean calm={0.01} />
+      <Ocean calm={0} />
     </>
   );
 }

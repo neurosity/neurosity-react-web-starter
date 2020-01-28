@@ -22,7 +22,7 @@ export function Ocean({ calm }) {
   }, [ref, setSimulator]);
 
   useEffect(() => {
-    if (simulator && animatedCalm) {
+    if (simulator) {
       setWeatherBasedOnCalm(animatedCalm, 0, 0);
     }
 
