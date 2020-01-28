@@ -15,35 +15,27 @@ export function LoginForm({ onLogin, loading, error, children }) {
       <h3 className="card-heading">Login</h3>
       {!!error ? <h4 className="card-error">{error}</h4> : null}
       <div className="row">
-        <label htmlFor="deviceId">Notion Device ID</label>
+        <label>Notion Device ID</label>
         <input
           type="text"
-          min="32"
-          max="32"
-          id="deviceId"
-          name="deviceId"
           value={deviceId}
           disabled={loading}
           onChange={e => setDeviceId(e.target.value)}
         />
       </div>
       <div className="row">
-        <label htmlFor="email">Email</label>
+        <label>Email</label>
         <input
           type="email"
-          id="email"
-          name="email"
           value={email}
           disabled={loading}
           onChange={e => setEmail(e.target.value)}
         />
       </div>
       <div className="row">
-        <label htmlFor="password">Password</label>
+        <label>Password</label>
         <input
           type="password"
-          id="password"
-          name="password"
           value={password}
           disabled={loading}
           onChange={e => setPassword(e.target.value)}
