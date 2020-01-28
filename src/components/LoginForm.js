@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Footer } from "./Footer";
 
-export function LoginForm({ onLogin, loading, error }) {
+export function LoginForm({ onLogin, loading, error, children }) {
   const [deviceId, setDeviceId] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -55,7 +54,7 @@ export function LoginForm({ onLogin, loading, error }) {
           {loading ? "Logging in..." : "Login"}
         </button>
       </div>
-      <Footer />
+      {children}
     </form>
   );
 }
