@@ -50,10 +50,12 @@ export function Status({ notion, info }) {
         ></span>
         {state in statesLabels ? statesLabels[state] : state}
       </div>
-      <div className="status-item status-battery">
-        <ChargingIcon /> &nbsp;{charging ? "Charging" : "Charged"}
-        &nbsp;{battery}%
-      </div>
+      {state !== "offline" ? (
+        <div className="status-item status-battery">
+          <ChargingIcon /> &nbsp;{charging ? "Charging" : "Charged"}
+          &nbsp;{battery}%
+        </div>
+      ) : null}
       {sleepMode && state !== "offline" ? (
         <div className="status-item status-sleep-mode">
           <SleepModeIcon /> &nbsp;Sleep mode
