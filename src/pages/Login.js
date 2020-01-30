@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { LoginForm } from "../components/LoginForm";
-import { Ocean } from "../components/Ocean/Ocean";
 import { Footer } from "../components/Footer";
 
 export function Login({ notion, user, setUser, setDeviceId }) {
@@ -53,11 +52,13 @@ export function Login({ notion, user, setUser, setDeviceId }) {
   }
 
   return (
-    <>
-      <LoginForm onLogin={onLogin} error={error} loading={isLoggingIn}>
-        <Footer />
-      </LoginForm>
-      <Ocean calm={0} />
-    </>
+    <main className="main-container">
+      <LoginForm
+        onLogin={onLogin}
+        error={error}
+        loading={isLoggingIn}
+        footerComponent={<Footer />}
+      />
+    </main>
   );
 }

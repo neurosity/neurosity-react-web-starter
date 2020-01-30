@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 
-export function LoginForm({ onLogin, loading, error, children }) {
+export function LoginForm({
+  onLogin,
+  loading,
+  error,
+  footerComponent
+}) {
   const [deviceId, setDeviceId] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -46,7 +51,7 @@ export function LoginForm({ onLogin, loading, error, children }) {
           {loading ? "Logging in..." : "Login"}
         </button>
       </div>
-      {children}
+      {footerComponent}
     </form>
   );
 }

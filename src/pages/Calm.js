@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Nav } from "../components/Nav";
-import { Ocean } from "../components/Ocean/Ocean";
 
 export function Calm({ user, notion }) {
   const [calm, setCalm] = useState(0);
@@ -20,10 +19,11 @@ export function Calm({ user, notion }) {
   }, [user, notion]);
 
   return (
-    <main>
+    <main className="main-container">
       {user ? <Nav notion={notion} /> : null}
-      <meter value={calm} min={0} max={1} />
-      <Ocean calm={calm} />
+      <div className="calm-score">
+        &nbsp;{calm * 100}% <div className="calm-word">Calm</div>
+      </div>
     </main>
   );
 }

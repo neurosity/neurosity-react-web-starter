@@ -1,15 +1,13 @@
 {
-  "name": "notion-ocean",
+  "name": "notion-react-starter",
   "version": "0.1.0",
-  "private": true,
   "dependencies": {
     "@neurosity/notion": "^4.2.6",
     "@reach/router": "^1.2.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-scripts": "3.3.0",
-    "react-use": "^13.21.0",
-    "rebound": "^0.1.0"
+    "react-use": "^13.21.0"
   },
   "scripts": {
     "start": "react-scripts start",

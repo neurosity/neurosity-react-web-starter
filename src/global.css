@@ -5,7 +5,6 @@
 body {
   margin: 0;
   background-color: #e6ecef;
-  background: linear-gradient(to bottom, #e6ecef 0%, #ffffff 56%);
   height: 100vh;
   font-size: 19px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
@@ -13,6 +12,14 @@ body {
     "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-wrap: wrap;
 }
 
 /**
@@ -62,10 +69,6 @@ body {
   padding: 30px 20px;
   border-radius: 8px;
   margin: 20px;
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 1;
 }
 
 .card-heading {
@@ -174,27 +177,27 @@ body {
 }
 
 /**
- * Meter
+ * pages/Calm.js
  */
-meter {
-  position: fixed;
-  width: 100vw;
-  height: 4px;
-  top: 0;
-  left: 0;
+.calm-score {
+  font-size: 100px;
+  color: darkslategray;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 70px;
+  font-size: 66px;
+  line-height: 54px;
+  border: 20px solid rgb(113, 211, 211);
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  padding: 0;
+  margin: 50px;
 }
 
-meter::-webkit-meter-optimum-value,
-meter::-webkit-meter-suboptimum-value,
-meter::-webkit-meter-even-less-good-value {
-  transition: 0.5s width;
-}
-
-/* WebKit */
-meter::-webkit-meter-bar {
-  background: transparent;
-}
-
-meter::-webkit-meter-optimum-value {
-  background: rgba(113, 211, 211, 0.4);
+.calm-word {
+  font-size: 40px;
 }
