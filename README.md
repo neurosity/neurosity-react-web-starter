@@ -1,4 +1,4 @@
-# Notion React Starter
+# 🚀 Notion React Starter
 
 ![App Screenshot](public/notion-react-starter.png)
 
