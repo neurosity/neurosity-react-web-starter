@@ -1,5 +1,7 @@
 # Notion React Starter
 
+![App Screenshot](public/notion-react-starter.png)
+
 ### Getting Started
 
 - 1️⃣ `git clone https://github.com/neurosity/notion-react-starter.git`
