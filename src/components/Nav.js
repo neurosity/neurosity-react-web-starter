@@ -1,29 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { navigate } from "@reach/router";
 
 import { Status } from "./Status";
 import { Footer } from "./Footer";
 
-export function Nav({ notion }) {
-  const [info, setInfo] = useState(null);
-
+export function Nav() {
   function goToLogout() {
     navigate("/logout");
   }
 
-  useEffect(() => {
-    if (!notion) {
-      return;
-    }
-
-    notion.getInfo().then(info => {
-      setInfo(info);
-    });
-  }, [notion]);
-
   return (
     <nav className="card">
-      <Status notion={notion} info={info} />
+      <Status />
       <button onClick={goToLogout} className="card-btn">
         Logout
       </button>
