@@ -1,15 +1,16 @@
 import { useEffect } from "react";
 import { navigate } from "@reach/router";
 
-export function Logout({ notion, resetState }) {
+import { useNotion } from "../services/notion";
+
+export function Logout() {
+  const { logoutNotion } = useNotion();
+
   useEffect(() => {
-    if (notion) {
-      notion.logout().then(() => {
-        resetState();
-        navigate("/");
-      });
-    }
-  }, [notion, resetState]);
+    logoutNotion().then(() => {
+      navigate("/");
+    });
+  }, [logoutNotion]);
 
   return null;
 }

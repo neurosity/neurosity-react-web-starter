@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { Link } from "@reach/router";
+
+import { useNotion } from "../services/notion";
 
 const statesLabels = {
   booting: "Starting OS...",
@@ -16,23 +19,9 @@ const stateColors = {
   offline: "crimson"
 };
 
-export function Status({ notion, info }) {
-  const [status, setStatus] = useState(null);
+export function Status() {
+  const { status, selectedDevice } = useNotion();
   const { state, charging, battery, sleepMode } = status || {};
-
-  useEffect(() => {
-    if (!notion) {
-      return;
-    }
-
-    const subscription = notion.status().subscribe(status => {
-      setStatus(status);
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [notion]);
 
   if (!status) {
     return <div>Connecting to device...</div>;
@@ -40,8 +29,20 @@ export function Status({ notion, info }) {
 
   return (
     <aside>
-      {info ? (
-        <h3 className="card-heading">{info.deviceNickname}</h3>
+      {selectedDevice ? (
+        <h3 className="card-heading">
+          <Link
+            to="/devices"
+            title="My Devices"
+            className="unstyled-link"
+          >
+            <span role="img" aria-label="My Devices">
+              ⚙️
+            </span>
+            &nbsp;&nbsp;
+            {selectedDevice.deviceNickname}
+          </Link>
+        </h3>
       ) : null}
       <div className="status-item status-state">
         <span

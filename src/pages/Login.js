@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from "react";
+import { navigate } from "@reach/router";
+import useEffectOnce from "react-use/lib/useEffectOnce";
+
 import { LoginForm } from "../components/LoginForm";
 import { Footer } from "../components/Footer";
 
-export function Login({ notion, user, setUser, setDeviceId }) {
+import { notion, useNotion } from "../services/notion";
+
+export function Login() {
+  const { user, lastSelectedDeviceId, setSelectedDevice } = useNotion();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
+  useEffectOnce(() => {
+    if (user) {
+      navigate("/");
+    }
+  });
+
   useEffect(() => {
-    if (!user && notion && email && password) {
+    if (email && password) {
       login();
     }
 
@@ -17,29 +29,34 @@ export function Login({ notion, user, setUser, setDeviceId }) {
       setIsLoggingIn(true);
       const auth = await notion
         .login({ email, password })
-        .catch(error => {
+        .catch((error) => {
           setError(error.message);
         });
 
       if (auth) {
-        setUser(auth.user);
         resetForm();
+
+        if (lastSelectedDeviceId) {
+          navigate("/");
+        } else {
+          navigate("/devices");
+        }
       }
       setIsLoggingIn(false);
     }
-  }, [email, password, notion, user, setUser, setError]);
+  }, [
+    email,
+    password,
+    setError,
+    lastSelectedDeviceId,
+    setSelectedDevice
+  ]);
 
-  function onLogin({ email, password, deviceId }) {
-    if (deviceId && deviceId.length !== 32) {
-      setError("Please enter a valid device id");
-      return;
-    }
-
-    if (email && password && deviceId) {
+  function onLogin({ email, password }) {
+    if (email && password) {
       setError("");
       setEmail(email);
       setPassword(password);
-      setDeviceId(deviceId);
     } else {
       setError("Please fill the form");
     }

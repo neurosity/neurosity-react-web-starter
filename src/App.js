@@ -1,74 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Router, navigate } from "@reach/router";
-import { Notion } from "@neurosity/notion";
-import useLocalStorage from "react-use/lib/useLocalStorage";
 
+import { ProvideNotion } from "./services/notion";
+import { Devices } from "./pages/Devices";
 import { Loading } from "./components/Loading";
 import { Login } from "./pages/Login";
 import { Logout } from "./pages/Logout";
 import { Calm } from "./pages/Calm";
 
+import { useNotion } from "./services/notion";
+
 export function App() {
-  const [notion, setNotion] = useState(null);
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [deviceId, setDeviceId] = useLocalStorage("deviceId");
+  return (
+    <ProvideNotion>
+      <Routes />
+    </ProvideNotion>
+  );
+}
+
+function Routes() {
+  const { user, loadingUser } = useNotion();
 
   useEffect(() => {
-    if (user) {
-      navigate("/calm");
+    if (!loadingUser && !user) {
+      navigate("/login");
     }
-  }, [user]);
+  }, [user, loadingUser]);
 
-  useEffect(() => {
-    if (deviceId) {
-      const notion = new Notion({ deviceId });
-      setNotion(notion);
-    } else {
-      setLoading(false);
-    }
-  }, [deviceId]);
-
-  useEffect(() => {
-    if (!notion) {
-      return;
-    }
-
-    const subscription = notion.onAuthStateChanged().subscribe(user => {
-      if (user) {
-        setUser(user);
-      } else {
-        navigate("/");
-      }
-      setLoading(false);
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [notion]);
-
-  function resetState() {
-    setNotion(null);
-    setUser(null);
-    setDeviceId("");
-  }
-
-  if (loading) {
+  if (loadingUser) {
     return <Loading />;
   }
 
   return (
     <Router>
-      <Login
-        path="/"
-        notion={notion}
-        user={user}
-        setUser={setUser}
-        setDeviceId={setDeviceId}
-      />
-      <Calm path="/calm" notion={notion} user={user} />
-      <Logout path="/logout" notion={notion} resetState={resetState} />
+      <Calm path="/" />
+      <Devices path="/devices" />
+      <Login path="/login" />
+      <Logout path="/logout" />
     </Router>
   );
 }
