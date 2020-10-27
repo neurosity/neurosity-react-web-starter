@@ -20,7 +20,8 @@ export function Calm() {
     }
 
     const subscription = notion.calm().subscribe((calm) => {
-      setCalm(Number(calm.probability.toFixed(2)));
+      const calmScore = Math.trunc(calm.probability * 100);
+      setCalm(calmScore);
     });
 
     return () => {
@@ -32,7 +33,7 @@ export function Calm() {
     <main className="main-container">
       {user ? <Nav /> : null}
       <div className="calm-score">
-        &nbsp;{calm * 100}% <div className="calm-word">Calm</div>
+        &nbsp;{calm}% <div className="calm-word">Calm</div>
       </div>
     </main>
   );
