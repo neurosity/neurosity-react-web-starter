@@ -24,9 +24,7 @@ export function Devices() {
         setDevices(devices);
         if (devices.length) {
           setDraftDeviceId(
-            lastSelectedDeviceId
-              ? lastSelectedDeviceId
-              : devices[0].deviceId
+            lastSelectedDeviceId ? lastSelectedDeviceId : devices[0].deviceId
           );
         }
       })
