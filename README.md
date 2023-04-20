@@ -1,11 +1,11 @@
-# 🚀 Notion React Starter
+# 🚀 Neurosity React Web Starter
 
 ![App Screenshot](public/notion-react-starter.png)
 
 ### Getting Started
 
-- 1️⃣ `git clone https://github.com/neurosity/notion-react-starter.git`
-- 2️⃣ `cd notion-react-starter`
+- 1️⃣ `git clone https://github.com/neurosity/neurosity-react-web-starter.git`
+- 2️⃣ `cd neurosity-react-web-starter`
 - 3️⃣ `npm install`
 - 4️⃣ `npm start`
 
