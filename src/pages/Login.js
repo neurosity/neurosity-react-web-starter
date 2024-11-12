@@ -7,8 +7,6 @@ import { neurosity, useNeurosity } from "../services/neurosity";
 export function Login() {
   const navigate = useNavigate();
   const { user, lastSelectedDeviceId } = useNeurosity();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
@@ -18,45 +16,31 @@ export function Login() {
     }
   }, [user, navigate]);
 
-  useEffect(() => {
-    if (email && password) {
-      login();
+  async function handleLogin({ email, password }) {
+    if (!email || !password) {
+      setError("Please fill the form");
+      return;
     }
 
-    async function login() {
-      setIsLoggingIn(true);
-      const auth = await neurosity.login({ email, password }).catch((error) => {
-        setError(error.message);
-      });
+    setError("");
+    setIsLoggingIn(true);
 
+    try {
+      const auth = await neurosity.login({ email, password });
       if (auth) {
-        resetForm();
         navigate(lastSelectedDeviceId ? "/" : "/devices");
       }
+    } catch (error) {
+      setError(error.message);
+    } finally {
       setIsLoggingIn(false);
     }
-  }, [email, password, lastSelectedDeviceId, navigate]);
-
-  function onLogin({ email, password }) {
-    if (email && password) {
-      setError("");
-      setEmail(email);
-      setPassword(password);
-    } else {
-      setError("Please fill the form");
-    }
-  }
-
-  function resetForm() {
-    setError("");
-    setEmail("");
-    setPassword("");
   }
 
   return (
     <main className="main-container">
       <LoginForm
-        onLogin={onLogin}
+        onLogin={handleLogin}
         error={error}
         loading={isLoggingIn}
         footerComponent={<Footer />}
