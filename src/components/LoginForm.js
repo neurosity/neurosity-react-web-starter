@@ -1,18 +1,43 @@
 import React, { useState } from "react";
+import { Neurosity } from "@neurosity/sdk";
 
 export function LoginForm({
   onLogin,
-  loading,
+  loading: externalLoading,
   error,
-  footerComponent
+  footerComponent,
 }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [internalLoading, setInternalLoading] = useState(false);
+
+  const neurosity = new Neurosity({
+    autoReconnect: true,
+    timesync: true,
+    deviceId: process.env.REACT_APP_DEVICE_ID,
+  });
+
+  const handleLogin = async (email, password) => {
+    try {
+      setInternalLoading(true);
+      await neurosity.login({
+        email,
+        password,
+      });
+      onLogin({ email, password });
+    } catch (error) {
+      console.error("Login failed:", error);
+    } finally {
+      setInternalLoading(false);
+    }
+  };
 
   function onSubmit(event) {
     event.preventDefault();
-    onLogin({ email, password });
+    handleLogin(email, password);
   }
+
+  const isLoading = externalLoading || internalLoading;
 
   return (
     <form className="card login-form" onSubmit={onSubmit}>
@@ -23,7 +48,7 @@ export function LoginForm({
         <input
           type="email"
           value={email}
-          disabled={loading}
+          disabled={isLoading}
           onChange={(e) => setEmail(e.target.value)}
         />
       </div>
@@ -32,13 +57,13 @@ export function LoginForm({
         <input
           type="password"
           value={password}
-          disabled={loading}
+          disabled={isLoading}
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
       <div className="row">
-        <button type="submit" className="card-btn" disabled={loading}>
-          {loading ? "Logging in..." : "Login"}
+        <button type="submit" className="card-btn" disabled={isLoading}>
+          {isLoading ? "Logging in..." : "Login"}
         </button>
       </div>
       {footerComponent}

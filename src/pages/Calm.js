@@ -1,25 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { navigate } from "@reach/router";
+import { useNavigate } from "react-router-dom";
 
-import { notion, useNotion } from "../services/notion";
+import { neurosity, useNeurosity } from "../services/neurosity";
 import { Nav } from "../components/Nav";
 
 export function Calm() {
-  const { user } = useNotion();
+  const navigate = useNavigate();
+  const { user } = useNeurosity();
   const [calm, setCalm] = useState(0);
 
   useEffect(() => {
     if (!user) {
       navigate("/login");
     }
-  }, [user]);
+  }, [user, navigate]);
 
   useEffect(() => {
     if (!user) {
       return;
     }
 
-    const subscription = notion.calm().subscribe((calm) => {
+    const subscription = neurosity.calm().subscribe((calm) => {
       const calmScore = Math.trunc(calm.probability * 100);
       setCalm(calmScore);
     });

@@ -1,10 +1,12 @@
 import React from "react";
-import { navigate } from "@reach/router";
+import { useNavigate } from "react-router-dom";
 
 import { Status } from "./Status";
 import { Footer } from "./Footer";
 
 export function Nav() {
+  const navigate = useNavigate();
+
   function goToLogout() {
     navigate("/logout");
   }

@@ -1,14 +1,14 @@
 import React from "react";
-import { Link } from "@reach/router";
+import { Link } from "react-router-dom";
 
-import { useNotion } from "../services/notion";
+import { useNeurosity } from "../services/neurosity";
 
 const statesLabels = {
   booting: "Starting OS...",
   shuttingOff: "Shutting off...",
   updating: "Updating OS...",
   online: "Online",
-  offline: "Offline"
+  offline: "Offline",
 };
 
 const stateColors = {
@@ -16,11 +16,11 @@ const stateColors = {
   shuttingOff: "darkslategrey",
   updating: "orange",
   online: "limegreen",
-  offline: "crimson"
+  offline: "crimson",
 };
 
 export function Status() {
-  const { status, selectedDevice } = useNotion();
+  const { status, selectedDevice } = useNeurosity();
   const { state, charging, battery, sleepMode } = status || {};
 
   if (!status) {
@@ -31,11 +31,7 @@ export function Status() {
     <aside>
       {selectedDevice ? (
         <h3 className="card-heading">
-          <Link
-            to="/devices"
-            title="My Devices"
-            className="unstyled-link"
-          >
+          <Link to="/devices" title="My Devices" className="unstyled-link">
             <span role="img" aria-label="My Devices">
               ⚙️
             </span>

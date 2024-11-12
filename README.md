@@ -12,7 +12,7 @@
 ### The Stack
 
 - ⚛️ Built with React - [Create React App](https://github.com/facebook/create-react-app)
-- 🏆 Reach Router - [@reach/router](https://reach.tech/router)
+- 🏆 React Router - [react-router-dom](https://reactrouter.com)
 - 🤯 NotionJS API - [@neurosity/notion](https://github.com/neurosity/notion-js)
 - 🔑 NotionJS Authentication
 - 👍 React Use - [react-use](https://github.com/streamich/react-use)
