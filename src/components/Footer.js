@@ -1,6 +1,15 @@
 import React from "react";
+import { useDarkMode } from "../hooks/useDarkMode";
 
 export function Footer() {
+  const [darkMode, setDarkMode] = useDarkMode();
+
+  const handleThemeToggle = (e) => {
+    e.preventDefault(); // Prevent form submission
+    e.stopPropagation(); // Stop event bubbling
+    setDarkMode(!darkMode);
+  };
+
   return (
     <footer className="card-footer">
       <a
@@ -22,6 +31,14 @@ export function Footer() {
           Neurosity
         </a>
       </div>
+      <button
+        type="button" // Explicitly set button type to prevent form submission
+        className="theme-toggle"
+        onClick={handleThemeToggle}
+        aria-label="Toggle dark mode"
+      >
+        {darkMode ? "🌙" : "☀️"}
+      </button>
     </footer>
   );
 }
