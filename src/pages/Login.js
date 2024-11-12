@@ -1,24 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { navigate } from "@reach/router";
-import useEffectOnce from "react-use/lib/useEffectOnce";
-
+import { useNavigate } from "react-router-dom";
 import { LoginForm } from "../components/LoginForm";
 import { Footer } from "../components/Footer";
-
-import { notion, useNotion } from "../services/notion";
+import { neurosity, useNeurosity } from "../services/neurosity";
 
 export function Login() {
-  const { user, lastSelectedDeviceId, setSelectedDevice } = useNotion();
+  const navigate = useNavigate();
+  const { user, lastSelectedDeviceId } = useNeurosity();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-  useEffectOnce(() => {
+  useEffect(() => {
     if (user) {
       navigate("/");
     }
-  });
+  }, [user, navigate]);
 
   useEffect(() => {
     if (email && password) {
@@ -27,30 +25,17 @@ export function Login() {
 
     async function login() {
       setIsLoggingIn(true);
-      const auth = await notion
-        .login({ email, password })
-        .catch((error) => {
-          setError(error.message);
-        });
+      const auth = await neurosity.login({ email, password }).catch((error) => {
+        setError(error.message);
+      });
 
       if (auth) {
         resetForm();
-
-        if (lastSelectedDeviceId) {
-          navigate("/");
-        } else {
-          navigate("/devices");
-        }
+        navigate(lastSelectedDeviceId ? "/" : "/devices");
       }
       setIsLoggingIn(false);
     }
-  }, [
-    email,
-    password,
-    setError,
-    lastSelectedDeviceId,
-    setSelectedDevice
-  ]);
+  }, [email, password, lastSelectedDeviceId, navigate]);
 
   function onLogin({ email, password }) {
     if (email && password) {

@@ -1,43 +1,41 @@
 import React, { useContext, createContext } from "react";
 import { useState, useEffect, useCallback } from "react";
-import { Notion } from "@neurosity/notion";
-import useLocalStorage from "react-use/lib/useLocalStorage";
+import { Neurosity } from "@neurosity/sdk";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
-export const notion = new Notion({
-  autoSelectDevice: false
+export const neurosity = new Neurosity({
+  autoSelectDevice: false,
 });
 
 const initialState = {
   selectedDevice: null,
   status: null,
   user: null,
-  loadingUser: true
+  loadingUser: true,
 };
 
-export const NotionContext = createContext();
+export const NeurosityContext = createContext();
 
-export const useNotion = () => {
-  return useContext(NotionContext);
+export const useNeurosity = () => {
+  return useContext(NeurosityContext);
 };
 
-export function ProvideNotion({ children }) {
-  const notionProvider = useProvideNotion();
+export function ProvideNeurosity({ children }) {
+  const neurosityProvider = useProvideNeurosity();
 
   return (
-    <NotionContext.Provider value={notionProvider}>
+    <NeurosityContext.Provider value={neurosityProvider}>
       {children}
-    </NotionContext.Provider>
+    </NeurosityContext.Provider>
   );
 }
 
-function useProvideNotion() {
-  const [
-    lastSelectedDeviceId,
-    setLastSelectedDeviceId
-  ] = useLocalStorage("deviceId");
+function useProvideNeurosity() {
+  const [lastSelectedDeviceId, setLastSelectedDeviceId] =
+    useLocalStorage("deviceId");
 
   const [state, setState] = useState({
-    ...initialState
+    ...initialState,
   });
 
   const { user, selectedDevice } = state;
@@ -45,17 +43,15 @@ function useProvideNotion() {
   const setSelectedDevice = useCallback((selectedDevice) => {
     setState((state) => ({
       ...state,
-      selectedDevice
+      selectedDevice,
     }));
   }, []);
 
   useEffect(() => {
     if (user && !selectedDevice) {
-      notion.selectDevice((devices) =>
+      neurosity.selectDevice((devices) =>
         lastSelectedDeviceId
-          ? devices.find(
-              (device) => device.deviceId === lastSelectedDeviceId
-            )
+          ? devices.find((device) => device.deviceId === lastSelectedDeviceId)
           : devices[0]
       );
     }
@@ -66,7 +62,7 @@ function useProvideNotion() {
       return;
     }
 
-    const subscription = notion.status().subscribe((status) => {
+    const subscription = neurosity.status().subscribe((status) => {
       setState((state) => ({ ...state, status }));
     });
 
@@ -78,15 +74,13 @@ function useProvideNotion() {
   useEffect(() => {
     setState((state) => ({ ...state, loadingUser: true }));
 
-    const subscription = notion
-      .onAuthStateChanged()
-      .subscribe((user) => {
-        setState((state) => ({
-          ...state,
-          user,
-          loadingUser: false
-        }));
-      });
+    const subscription = neurosity.onAuthStateChanged().subscribe((user) => {
+      setState((state) => ({
+        ...state,
+        user,
+        loadingUser: false,
+      }));
+    });
 
     return () => {
       subscription.unsubscribe();
@@ -94,7 +88,7 @@ function useProvideNotion() {
   }, []);
 
   useEffect(() => {
-    const sub = notion.onDeviceChange().subscribe((selectedDevice) => {
+    const sub = neurosity.onDeviceChange().subscribe((selectedDevice) => {
       setSelectedDevice(selectedDevice);
       setLastSelectedDeviceId(selectedDevice.deviceId); // cache locally
     });
@@ -104,9 +98,9 @@ function useProvideNotion() {
     };
   }, [setSelectedDevice, setLastSelectedDeviceId]);
 
-  const logoutNotion = useCallback(() => {
+  const logoutNeurosity = useCallback(() => {
     return new Promise((resolve) => {
-      notion.logout().then(resolve);
+      neurosity.logout().then(resolve);
       setState({ ...initialState, loadingUser: false });
     });
   }, []);
@@ -115,7 +109,7 @@ function useProvideNotion() {
     ...state,
     lastSelectedDeviceId,
     setLastSelectedDeviceId,
-    logoutNotion,
-    setSelectedDevice
+    logoutNeurosity,
+    setSelectedDevice,
   };
 }

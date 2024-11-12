@@ -1,16 +1,16 @@
 import { useEffect } from "react";
-import { navigate } from "@reach/router";
-
-import { useNotion } from "../services/notion";
+import { useNavigate } from "react-router-dom";
+import { useNeurosity } from "../services/neurosity";
 
 export function Logout() {
-  const { logoutNotion } = useNotion();
+  const navigate = useNavigate();
+  const { logoutNeurosity } = useNeurosity();
 
   useEffect(() => {
-    logoutNotion().then(() => {
+    logoutNeurosity().then(() => {
       navigate("/");
     });
-  }, [logoutNotion]);
+  }, [logoutNeurosity, navigate]);
 
   return null;
 }
