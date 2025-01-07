@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { useNeurosity } from "../services/neurosity";
@@ -20,24 +20,39 @@ const stateColors = {
 };
 
 export function Status() {
-  const { status, selectedDevice } = useNeurosity();
+  const { status, selectedDevice, devices, getDeviceList } = useNeurosity();
   const { state, charging, battery, sleepMode } = status || {};
+
+  useEffect(() => {
+    getDeviceList();
+  }, [getDeviceList]);
 
   if (!status) {
     return <div>Connecting to device...</div>;
   }
 
+  const hasMultipleDevices = devices && devices.length > 1;
+
   return (
     <aside>
       {selectedDevice ? (
-        <h3 className="card-heading">
-          <Link to="/devices" title="My Devices" className="unstyled-link">
-            <span role="img" aria-label="My Devices">
+        <h3 className="card-heading status-heading">
+          <span>
+            <span role="img" aria-label="My Device">
               ⚙️
             </span>
             &nbsp;&nbsp;
             {selectedDevice.deviceNickname}
-          </Link>
+          </span>
+          {hasMultipleDevices && (
+            <Link
+              to="/devices"
+              className="card-link"
+              style={{ fontSize: "0.8em" }}
+            >
+              Devices
+            </Link>
+          )}
         </h3>
       ) : null}
       <div className="status-item status-state">

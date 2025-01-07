@@ -12,6 +12,7 @@ const initialState = {
   status: null,
   user: null,
   loadingUser: true,
+  devices: [],
 };
 
 export const NeurosityContext = createContext();
@@ -47,83 +48,61 @@ function useProvideNeurosity() {
     }));
   }, []);
 
+  const getDeviceList = useCallback(() => {
+    return neurosity.getDevices().then((devices) => {
+      setState((state) => ({ ...state, devices }));
+      return devices;
+    });
+  }, []);
+
   useEffect(() => {
     if (user && !selectedDevice) {
-      console.log("[Auto-Select] Starting device selection process");
-      console.log("[Auto-Select] User:", user?.email);
-      console.log(
-        "[Auto-Select] Last selected device ID:",
-        lastSelectedDeviceId
-      );
-
-      neurosity
-        .getDevices()
+      getDeviceList()
         .then((devices) => {
-          console.log("[Auto-Select] Available devices:", devices);
-
           if (devices && devices.length > 0) {
             let deviceToSelect = null;
 
-            // Try to find the last selected device
             if (lastSelectedDeviceId) {
               deviceToSelect = devices.find(
                 (device) => device.deviceId === lastSelectedDeviceId
               );
-              console.log("[Auto-Select] Last device found:", !!deviceToSelect);
             }
 
-            // If no last device or not found, use the first available device
             if (!deviceToSelect) {
               deviceToSelect = devices[0];
-              console.log(
-                "[Auto-Select] Using first available device:",
-                deviceToSelect.deviceId
-              );
-              // Update the lastSelectedDeviceId to match the new selection
               setLastSelectedDeviceId(deviceToSelect.deviceId);
             }
 
-            console.log("[Auto-Select] Device to select:", deviceToSelect);
-
-            neurosity.selectDevice(() => {
-              console.log(
-                "[Auto-Select] Returning device in selector:",
-                deviceToSelect
-              );
-              return deviceToSelect;
-            });
-          } else {
-            console.warn("[Auto-Select] No devices available");
+            neurosity.selectDevice(() => deviceToSelect);
           }
         })
         .catch((error) => {
           console.error("[Auto-Select] Error getting devices:", error);
         });
     }
-  }, [user, lastSelectedDeviceId, selectedDevice, setLastSelectedDeviceId]);
+  }, [
+    user,
+    lastSelectedDeviceId,
+    selectedDevice,
+    setLastSelectedDeviceId,
+    getDeviceList,
+  ]);
 
   useEffect(() => {
-    if (!selectedDevice) {
-      console.log(
-        "[Device Status] No device selected, skipping status subscription"
-      );
+    if (!selectedDevice?.deviceId) {
       return;
     }
 
-    console.log(
-      "[Device Status] Setting up status subscription for device:",
-      selectedDevice.deviceId
-    );
-    const subscription = neurosity.status().subscribe((status) => {
-      console.log("[Device Status] Received status update:", status);
-      setState((state) => ({ ...state, status }));
+    const statusSub = neurosity.status().subscribe((status) => {
+      if (JSON.stringify(status) !== JSON.stringify(state.status)) {
+        setState((state) => ({ ...state, status }));
+      }
     });
 
     return () => {
-      console.log("[Device Status] Cleaning up status subscription");
-      subscription.unsubscribe();
+      statusSub.unsubscribe();
     };
-  }, [selectedDevice]);
+  }, [selectedDevice?.deviceId, state.status]);
 
   useEffect(() => {
     setState((state) => ({ ...state, loadingUser: true }));
@@ -143,23 +122,34 @@ function useProvideNeurosity() {
 
   useEffect(() => {
     const sub = neurosity.onDeviceChange().subscribe((selectedDevice) => {
-      console.log("[Device Change] Device changed to:", selectedDevice);
-      setSelectedDevice(selectedDevice);
-      setLastSelectedDeviceId(selectedDevice.deviceId); // cache locally
+      if (selectedDevice?.deviceId !== state.selectedDevice?.deviceId) {
+        setSelectedDevice(selectedDevice);
+
+        if (selectedDevice?.deviceId !== lastSelectedDeviceId) {
+          setLastSelectedDeviceId(selectedDevice?.deviceId);
+        }
+      }
     });
 
     return () => {
-      console.log("[Device Change] Cleaning up device change subscription");
       sub.unsubscribe();
     };
-  }, [setSelectedDevice, setLastSelectedDeviceId]);
+  }, [
+    setSelectedDevice,
+    setLastSelectedDeviceId,
+    state.selectedDevice?.deviceId,
+    lastSelectedDeviceId,
+  ]);
 
   const logoutNeurosity = useCallback(() => {
     return new Promise((resolve) => {
-      neurosity.logout().then(resolve);
-      setState({ ...initialState, loadingUser: false });
+      neurosity.logout().then(() => {
+        setLastSelectedDeviceId(null);
+        setState({ ...initialState, loadingUser: false });
+        resolve();
+      });
     });
-  }, []);
+  }, [setLastSelectedDeviceId]);
 
   return {
     ...state,
@@ -167,5 +157,6 @@ function useProvideNeurosity() {
     setLastSelectedDeviceId,
     logoutNeurosity,
     setSelectedDevice,
+    getDeviceList,
   };
 }
