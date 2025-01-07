@@ -8,7 +8,7 @@ export function Logout() {
 
   useEffect(() => {
     logoutNeurosity().then(() => {
-      navigate("/");
+      navigate("/login");
     });
   }, [logoutNeurosity, navigate]);
 
